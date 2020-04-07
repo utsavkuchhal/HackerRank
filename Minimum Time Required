@@ -1,0 +1,39 @@
+You are planning production for an order. You have a number of machines that each have a fixed number of days to produce an item.
+Given that all the machines operate simultaneously, determine the minimum number of days to produce the required order.
+
+For example, you have to produce  items. You have three machines that take  days to produce an item.
+The following is a schedule of items produced:
+
+Day Production  Count
+2   2               2
+3   1               3
+4   2               5
+6   3               8
+8   2              10
+
+    static long minTime(long[] machines, long goal) {
+        double slope = 0;
+        for(long i : machines){//O(N)
+            double temp = (1/(double)i);
+            slope += temp;
+        }
+        double tempSol = goal/slope;
+        if(tempSol/((long)(tempSol)) > 1){//add 1
+            return (long) tempSol + 1;
+        }
+        return (long) tempSol;
+    }
+
+
+
+You just have to think about it in terms of machines that I have each day. E.g
+
+We have thre machines that take 1,2 and 3 days to deliver 1 product. Consequently:
+
+machine 1 produces 1 product/day
+machine 2 produces 1/2 product/day
+machine 3 produces 1/3 product/day
+Now that the days are our independent variable, we can sum this potential productions with each machine BUILDING A LINEAR EQUATION in the form of:
+
+y = ((1/1)+(1/2)+(1/3))* x ==> y = 0.8333333*x
+I recommend you graph that function and a constant function representing the target production. We just need to find in which number they meet. And here we have 2 different cases.
