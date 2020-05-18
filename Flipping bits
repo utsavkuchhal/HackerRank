@@ -1,0 +1,62 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the flippingBits function below.
+    static long flippingBits(long n) {
+        long[] arr = new long[32];
+        int i = 0;
+        while(n != 0)
+        {
+            arr[i++] = n % 2;
+            n  = n / 2;
+        } 
+        if(i < arr.length)
+        arr[i] = n;
+        for(int j = 0; j < arr.length; j++)
+        {
+            if(arr[j] == 1)
+                arr[j] = 0;
+            else
+                arr[j] = 1;
+        }
+
+        long ans =0;
+        long number = 1;
+        for(int j = 0; j < arr.length; j++)
+        {
+            ans  = ans  + arr[j] * number;
+            number = number *(long)2;
+        }
+        return ans;
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int q = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        for (int qItr = 0; qItr < q; qItr++) {
+            long n = scanner.nextLong();
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+            long result = flippingBits(n);
+
+            bufferedWriter.write(String.valueOf(result));
+            bufferedWriter.newLine();
+        }
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
