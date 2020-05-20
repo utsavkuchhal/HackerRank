@@ -1,0 +1,23 @@
+
+public class kadaneAlgo {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int[] arr = {-2, -3, 4, -1, -2, 1, 5, -3};
+		System.out.println(MaxSubarraySum(arr));
+	}
+	
+	 static  int MaxSubarraySum(int[] arr)
+	{
+		int maxlocal = arr[0] , maxglobal = arr[0];
+		
+		for(int i = 1; i < arr.length; i++)
+		{
+			maxlocal = Math.max(arr[i],maxlocal + arr[i]);
+			if(maxlocal > maxglobal)
+				maxglobal = maxlocal;
+		}
+		return maxglobal;
+	}
+
+}
