@@ -1,0 +1,95 @@
+Explanation:-Since A is first sorted, A[i+2], A[i+1], A[i] are the largest consecutive values which can form triangle.
+Any other choice won't fulfill the conditions mentioned in the problem statement. I'll prove it by contradiction.
+
+Suppose a, c, r be three non-consecutive values chosen to form the triangle such that a <= c <= r.
+Here, r is the longest side for the triangle. Now, let the consecutive values keeping r as maximum be p, q, r such that p <= q <= r.
+
+Now, since a, c, r form non-degenerate triangle, a+c > r (by triangle inequality). Also, p+q >= a+c because p, q, r are consecutive.
+So p+q >= a+c > r, which implies p+q > r. Thus, a non-degenerate triangle can be formed using p, q, r too !
+
+Finally, comparing perimeters : p+q+r >= a+c+r since p+q >= a+c. This contradicts our choice for maximum perimeter.
+Hence, choose the consecutive values.
+
+
+
+
+
+
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    // Complete the maximumPerimeterTriangle function below.
+    static int[] maximumPerimeterTriangle(int[] sticks) {
+        int[] arr = new int[3];
+        int [] neg = {-1};
+        Arrays.sort(sticks);
+
+        for(int i = 2; i < sticks.length; i++)
+        {
+            if(sticks[i - 2] + sticks[i - 1] > sticks[i])
+            {
+                arr[0] = sticks[i - 2];
+                arr[1] = sticks[i - 1];
+                arr[2] = sticks[i];
+             }
+        }
+        if(arr[0] != 0)
+            return arr;
+        else
+            return neg;
+    }
+
+    public static boolean isPossibleTriangle(int[] arr){
+        if(arr[0] + arr[1] > arr[2] && 
+           arr[1] + arr[2] > arr[0] && 
+           arr[0] + arr[1] > arr[2]){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int n = scanner.nextInt();
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        int[] sticks = new int[n];
+
+        String[] sticksItems = scanner.nextLine().split(" ");
+        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+        for (int i = 0; i < n; i++) {
+            int sticksItem = Integer.parseInt(sticksItems[i]);
+            sticks[i] = sticksItem;
+        }
+
+        int[] result = maximumPerimeterTriangle(sticks);
+
+        for (int i = 0; i < result.length; i++) {
+            bufferedWriter.write(String.valueOf(result[i]));
+
+            if (i != result.length - 1) {
+                bufferedWriter.write(" ");
+            }
+        }
+
+        bufferedWriter.newLine();
+
+        bufferedWriter.close();
+
+        scanner.close();
+    }
+}
+
+
